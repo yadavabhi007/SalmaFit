@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block heading %} Salma Style {% endblock heading %}
+
+{% block content %}
+{% for data in terms_and_conditions%}
+ <h3>{{data.heading}}</h3>
+ <p>{{data.description | linebreaks}}</p>
+{% endfor %}
+{% endblock content %}

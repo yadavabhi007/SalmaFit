@@ -178,12 +178,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 PASSWORD_RESET_TIMEOUT=900          # 900 Sec = 15 Min
 
 
-CORS_ALLOWED_ORIGINS = [
-    # "https://example.com",
-    # "https://sub.example.com",
-    "http://localhost:8080",
-    "http://127.0.0.1:8000",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
+
+SESSION_COOKIE_AGE = 120
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 from .local_settings import *

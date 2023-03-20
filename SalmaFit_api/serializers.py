@@ -35,6 +35,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    class Meta:
+        fields = ['email']
+
+
+class VerifyAccountSerializer(serializers.Serializer):
+    verify_email_otp = serializers.IntegerField()
+    class Meta:
+        fields = ['verify_email_otp']
+
+        
 class UserPhoneSerializer(serializers.ModelSerializer):
     phone = serializers.CharField()
     class Meta:

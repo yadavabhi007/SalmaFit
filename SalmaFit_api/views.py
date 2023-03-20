@@ -12,7 +12,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 from pyfcm import FCMNotification
+from django.core.mail import send_mail
 import requests
+import random
 import json
 
 
@@ -26,6 +28,40 @@ def get_tokens_for_user(user):
     }
 
 # Create your views here.
+
+
+class EmailVerificationView(APIView):
+    def post(self, request, format=None):
+        serializer = UserEmailSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.data['email']
+            if not User.objects.filter(email=email):
+                otp = random.randint(100000, 999999)
+                request.session['otp'] = otp
+                send_mail(
+                'Salma Style',
+                f'Your OTP For Email Verification {otp}',
+                ('EMAIL_HOST_USER'),
+                [email],
+                fail_silently=False,
+                )
+                return Response({'status':'True', 'message':'OTP Sent'})
+            return Response({'status':'False', 'message':'Email Already Exits'})
+        return Response({'status':'False', 'message':'404 Bad Request', 'errors':serializer.errors})
+
+
+class VerifyEmailView(APIView):
+    def post(self, request, format=None):
+        serializer = VerifyAccountSerializer(data=request.data)
+        if serializer.is_valid():
+            otp = serializer.data['verify_email_otp']
+            if request.session['otp'] == otp:
+                return Response({'status':'True', 'message':'Your Email Is Verified'})
+            return Response({'status':'False', 'message':'Your Email Is Not Verified'})
+        return Response({'status':'False', 'message':'404 Bad Request', 'errors':serializer.errors})
+    
+
+
 class UserRegistration(APIView):
     # renderer_classes = [UserRenderer]
     def post(self, request, format=None):

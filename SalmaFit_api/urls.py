@@ -8,6 +8,8 @@ from . import views
 urlpatterns = [
     # path('', include(router.urls)),
     path('countrycode/', views.CountryCodeView.as_view(), name='countrycode'),
+    path('email/', views.EmailVerificationView.as_view(), name='email'),
+    path('emailverify/', views.VerifyEmailView.as_view(), name='emailverify'),
     path('register/', views.UserRegistration.as_view(), name='register'),
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('phoneverify/', views.PhoneVerificationView.as_view(), name='phoneverify'),

@@ -45,7 +45,7 @@ class EmailVerificationView(APIView):
                 [email],
                 fail_silently=False,
                 )
-                return Response({'status':'True', 'message':'OTP Sent'})
+                return Response({'status':'True', 'message':'OTP Sent. Valid For Only 2 Minutes'})
             return Response({'status':'False', 'message':'Email Already Exits'})
         return Response({'status':'False', 'message':'404 Bad Request', 'errors':serializer.errors})
 
@@ -55,9 +55,12 @@ class VerifyEmailView(APIView):
         serializer = VerifyAccountSerializer(data=request.data)
         if serializer.is_valid():
             otp = serializer.data['verify_email_otp']
-            if request.session['otp'] == otp:
-                return Response({'status':'True', 'message':'Your Email Is Verified'})
-            return Response({'status':'False', 'message':'Your Email Is Not Verified'})
+            try:
+                if request.session['otp'] == otp:
+                    return Response({'status':'True', 'message':'Your Email Is Verified'})
+                return Response({'status':'False', 'message':'Your Email Is Not Verified'})
+            except KeyError:
+                return Response({'status':'False', 'message':'OTP Expired, Generate Again'})
         return Response({'status':'False', 'message':'404 Bad Request', 'errors':serializer.errors})
     
 

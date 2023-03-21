@@ -40,7 +40,7 @@ class EmailVerificationView(APIView):
                 request.session['otp'] = otp
                 send_mail(
                 'Salma Style',
-                f'Your OTP For Email Verification {otp}',
+                f'Your OTP For Email Verification is {otp}. Valid For Only 2 Minutes',
                 ('EMAIL_HOST_USER'),
                 [email],
                 fail_silently=False,

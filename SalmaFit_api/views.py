@@ -40,12 +40,12 @@ class EmailVerificationView(APIView):
                 request.session['otp'] = otp
                 send_mail(
                 'Salma Style',
-                f'Your OTP For Email Verification is {otp}. Valid For Only 2 Minutes',
+                f'Your OTP For Email Verification is {otp}.',
                 ('EMAIL_HOST_USER'),
                 [email],
                 fail_silently=False,
                 )
-                return Response({'status':'True', 'message':'OTP Sent. Valid For Only 2 Minutes'})
+                return Response({'status':'True', 'message':'OTP Sent.'})
             return Response({'status':'False', 'message':'Email Already Exits'})
         return Response({'status':'False', 'message':'404 Bad Request', 'errors':serializer.errors})
 

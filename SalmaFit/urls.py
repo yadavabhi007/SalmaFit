@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from SalmaFit_api import views
-from django.urls import path, include
+from django.urls import path, re_path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 
@@ -30,6 +31,8 @@ urlpatterns = i18n_patterns(
     path('farsi/aboutus/', views.FarsiAboutUsView.as_view(), name='faaboutus'),
     path('farsi/termsandconditions/', views.FarsiTermsAndConditionsView.as_view(), name='fatermsandconditions'),
     path('privacypolicy/', views.PrivacyPolicyView.as_view(), name='privacypolicy'),
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     prefix_default_language=True
 )
 

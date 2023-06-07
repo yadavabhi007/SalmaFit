@@ -45,7 +45,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
     name = models.CharField(max_length=100, verbose_name=_('Name'))
-    phone = models.CharField(max_length=20, unique=True, verbose_name=_('Phone'))
+    phone = models.CharField(max_length=20, unique=True, verbose_name=_('Phone'), null=True, blank=True)
     profile = models.ImageField(upload_to='profile', null=True, blank=True, verbose_name=_('Profile'))
     device_token = models.CharField(max_length=500, null=True, blank=True, verbose_name=_('Device Token'))
     is_active = models.BooleanField(default=True, verbose_name=_('Is Active'))

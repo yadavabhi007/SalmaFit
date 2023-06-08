@@ -14,7 +14,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'name', 'phone', 'device_token', 'profile', 'password']
         extra_kwargs = {
-            'password':{'write_only':True}, 'phone':{'required':False}, 'profile':{'required':False}
+            'password':{'write_only':True}, 'phone':{'required':False}, 'profile':{'required':False}, 'device_token':{'required':False}
         }
 
     # def validate(self, attrs):
